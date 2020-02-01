@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public int PlayerIndex { get; set; }
 
     Color[] playerColors = { Color.green, Color.red, Color.blue, Color.yellow };
+    public float forceMultiplier;
 
     SpriteRenderer cachedRenderer;
     Rigidbody2D endA;
@@ -31,7 +32,8 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-
+        Debug.Log(Actions.joystick.Value);
+        endB.AddForce(Actions.joystick.Value * forceMultiplier);
 	}
 
 }

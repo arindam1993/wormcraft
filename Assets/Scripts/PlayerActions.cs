@@ -12,7 +12,7 @@ public class PlayerActions : PlayerActionSet
 	public PlayerAction Right;
 	public PlayerAction Up;
 	public PlayerAction Down;
-	public PlayerTwoAxisAction Rotate;
+	public PlayerTwoAxisAction joystick;
 
 
 	public PlayerActions()
@@ -25,7 +25,7 @@ public class PlayerActions : PlayerActionSet
 		Right = CreatePlayerAction( "Right" );
 		Up = CreatePlayerAction( "Up" );
 		Down = CreatePlayerAction( "Down" );
-		Rotate = CreateTwoAxisPlayerAction( Left, Right, Down, Up );
+		joystick = CreateTwoAxisPlayerAction( Left, Right, Down, Up );
 	}
 
 
