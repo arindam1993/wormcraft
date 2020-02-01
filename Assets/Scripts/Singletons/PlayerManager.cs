@@ -5,84 +5,80 @@ using InControl;
 
 public class PlayerManager : MonoBehaviour
 {
-    // This example roughly illustrates the proper way to add multiple players from existing
-    // devices. Notice how InputManager.Devices is not used and no index into it is taken.
-    // Rather a device references are stored in each player and we use InputManager.OnDeviceDetached
-    // to know when one is detached.
-    //
-    // InputManager.Devices should be considered a pool from which devices may be chosen,
-    // not a player list. It could contain non-responsive or unsupported controllers, or there could
-    // be more connected controllers than your game supports, so that isn't a good strategy.
-    //
-    // To detect a joining player, we just check the current active device (which is the last
-    // device to provide input) for a relevant button press, check that it isn't already assigned
-    // to a player, and then create a new player with it.
-    //
-    // NOTE: Due to how Unity handles joysticks, disconnecting a single device will currently cause
-    // all devices to detach, and the remaining ones to reattach. There is no reliable workaround
-    // for this issue. As a result, a disconnecting controller essentially resets this example.
-    // In a more real world scenario, we might keep the players around and throw up some UI to let
-    // users activate controllers and pick their players again before resuming.
-    //
-    // This example could easily be extended to use bindings. The process would be very similar,
-    // just creating a new instance of your action set subclass per player and assigning the
-    // device to its Device property.
-    //
+	// This example iterates on the basic multiplayer example by using action sets with
+	// bindings to support both joystick and keyboard players. It would be a good idea
+	// to understand the basic multiplayer example first before looking a this one.
 
     public GameObject playerPrefab;
-
-    public static PlayerManager Instance;
 
     const int maxPlayers = 4;
 
     List<Vector3> playerPositions = new List<Vector3>() {
-        new Vector3( -1, 1, 0 ),
-        new Vector3( 1, 1, 0 ),
-        new Vector3( -1, -1, 0 ),
-        new Vector3( 1, -1, 0 ),
-    };
+            new Vector3( -1, 1, 0 ),
+            new Vector3( 1, 1, 0 ),
+            new Vector3( -1, -1, 0 ),
+            new Vector3( 1, -1, 0 ),
+        };
+
+
 
     List<Player> players = new List<Player>(maxPlayers);
 
-    private void Awake()
+    PlayerActions keyboardListener;
+    PlayerActions joystickListener;
+
+
+    void OnEnable()
     {
-        Instance = this;
+        InputManager.OnDeviceDetached += OnDeviceDetached;
+        keyboardListener = PlayerActions.CreateWithKeyboardBindings();
+        joystickListener = PlayerActions.CreateWithJoystickBindings();
     }
 
 
-    void Start()
+    void OnDisable()
     {
-        InputManager.OnDeviceDetached += OnDeviceDetached;
+        InputManager.OnDeviceDetached -= OnDeviceDetached;
+        joystickListener.Destroy();
+        keyboardListener.Destroy();
     }
 
 
     void Update()
     {
-        var inputDevice = InputManager.ActiveDevice;
-
-        if (JoinButtonWasPressedOnDevice(inputDevice))
+        if (JoinButtonWasPressedOnListener(joystickListener))
         {
-            if (ThereIsNoPlayerUsingDevice(inputDevice))
+            var inputDevice = InputManager.ActiveDevice;
+
+            if (ThereIsNoPlayerUsingJoystick(inputDevice))
             {
                 CreatePlayer(inputDevice);
+            }
+        }
+
+        if (JoinButtonWasPressedOnListener(keyboardListener))
+        {
+            if (ThereIsNoPlayerUsingKeyboard())
+            {
+                CreatePlayer(null);
             }
         }
     }
 
 
-    bool JoinButtonWasPressedOnDevice(InputDevice inputDevice)
+    bool JoinButtonWasPressedOnListener(PlayerActions actions)
     {
-        return inputDevice.AnyButtonWasReleased;
+        return actions.Green.WasPressed || actions.Red.WasPressed || actions.Blue.WasPressed || actions.Yellow.WasPressed;
     }
 
 
-    Player FindPlayerUsingDevice(InputDevice inputDevice)
+    Player FindPlayerUsingJoystick(InputDevice inputDevice)
     {
         var playerCount = players.Count;
         for (var i = 0; i < playerCount; i++)
         {
             var player = players[i];
-            if (player.Device == inputDevice)
+            if (player.Actions.Device == inputDevice)
             {
                 return player;
             }
@@ -92,16 +88,37 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-    bool ThereIsNoPlayerUsingDevice(InputDevice inputDevice)
+    bool ThereIsNoPlayerUsingJoystick(InputDevice inputDevice)
     {
-        return FindPlayerUsingDevice(inputDevice) == null;
+        return FindPlayerUsingJoystick(inputDevice) == null;
+    }
+
+
+    Player FindPlayerUsingKeyboard()
+    {
+        var playerCount = players.Count;
+        for (var i = 0; i < playerCount; i++)
+        {
+            var player = players[i];
+            if (player.Actions == keyboardListener)
+            {
+                return player;
+            }
+        }
+
+        return null;
+    }
+
+
+    bool ThereIsNoPlayerUsingKeyboard()
+    {
+        return FindPlayerUsingKeyboard() == null;
     }
 
 
     void OnDeviceDetached(InputDevice inputDevice)
     {
-        var player = FindPlayerUsingDevice(inputDevice);
-        Debug.Log("Controller Connected");
+        var player = FindPlayerUsingJoystick(inputDevice);
         if (player != null)
         {
             RemovePlayer(player);
@@ -113,14 +130,30 @@ public class PlayerManager : MonoBehaviour
     {
         if (players.Count < maxPlayers)
         {
-            Debug.Log("Player Created");
             // Pop a position off the list. We'll add it back if the player is removed.
             var playerPosition = playerPositions[0];
             playerPositions.RemoveAt(0);
 
             var gameObject = (GameObject)Instantiate(playerPrefab, playerPosition, Quaternion.identity);
             var player = gameObject.GetComponent<Player>();
-            player.Device = inputDevice;
+            player.PlayerIndex = players.Count;
+
+            if (inputDevice == null)
+            {
+                // We could create a new instance, but might as well reuse the one we have
+                // and it lets us easily find the keyboard player.
+                player.Actions = keyboardListener;
+            }
+            else
+            {
+                // Create a new instance and specifically set it to listen to the
+                // given input device (joystick).
+                var actions = PlayerActions.CreateWithJoystickBindings();
+                actions.Device = inputDevice;
+
+                player.Actions = actions;
+            }
+
             players.Add(player);
 
             return player;
@@ -134,7 +167,7 @@ public class PlayerManager : MonoBehaviour
     {
         playerPositions.Insert(0, player.transform.position);
         players.Remove(player);
-        player.Device = null;
+        player.Actions = null;
         Destroy(player.gameObject);
     }
 }

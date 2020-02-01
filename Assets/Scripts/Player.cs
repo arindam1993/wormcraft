@@ -10,60 +10,30 @@ using UnityEngine;
 //
 public class Player : MonoBehaviour
 {
-	public InputDevice Device { get; set; }
+    public PlayerActions Actions { get; set; }
+    public int PlayerIndex { get; set; }
 
-	SpriteRenderer cachedRenderer;
+    Color[] playerColors = { Color.green, Color.red, Color.blue, Color.yellow };
+
+    SpriteRenderer cachedRenderer;
+    Rigidbody2D endA;
+    Rigidbody2D endB;
 
 
 	void Start()
 	{
         cachedRenderer = this.transform.Find("Center").GetComponent<SpriteRenderer>();
-	}
+        endA = this.transform.Find("End_A").GetComponent<Rigidbody2D>();
+        endB = this.transform.Find("End_B").GetComponent<Rigidbody2D>();
+        cachedRenderer.color = playerColors[PlayerIndex];
+    }
 
 
 	void Update()
 	{
-		if (Device == null)
-		{
-			// If no controller set, just make it translucent white.
-			cachedRenderer.color = new Color( 1.0f, 1.0f, 1.0f, 0.2f );
-		}
-		else
-		{
-			// Set object material color based on which action is pressed.
-			cachedRenderer.color = GetColorFromInput();
 
-			// Rotate object with left stick or d-pad.
-			transform.Rotate( Vector3.down, 500.0f * Time.deltaTime * Device.Direction.X, Space.World );
-			transform.Rotate( Vector3.right, 500.0f * Time.deltaTime * Device.Direction.Y, Space.World );
-		}
 	}
 
-
-	Color GetColorFromInput()
-	{
-		if (Device.Action1)
-		{
-			return Color.green;
-		}
-
-		if (Device.Action2)
-		{
-			return Color.red;
-		}
-
-		if (Device.Action3)
-		{
-			return Color.blue;
-		}
-
-		if (Device.Action4)
-		{
-			return Color.yellow;
-		}
-
-		return Color.white;
-	}
 }
 
 
