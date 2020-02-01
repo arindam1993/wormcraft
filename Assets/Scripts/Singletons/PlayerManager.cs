@@ -68,7 +68,7 @@ public class PlayerManager : MonoBehaviour
 
     bool JoinButtonWasPressedOnListener(PlayerActions actions)
     {
-        return actions.Green.WasPressed || actions.Red.WasPressed || actions.Blue.WasPressed || actions.Yellow.WasPressed;
+        return actions.Join.WasPressed;
     }
 
 
