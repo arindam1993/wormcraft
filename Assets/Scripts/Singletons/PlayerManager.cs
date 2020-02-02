@@ -80,28 +80,31 @@ public class PlayerManager : MonoBehaviour
         {
             Bounds playersBounds = GetPlayersBoundingBox();
             Vector3 boundCenter = playersBounds.center;
+            float boundsAspect = playersBounds.size.x / playersBounds.size.y;
 
             Matrix4x4 camMatrix = cam.worldToCameraMatrix;
-            Vector3 center = camMatrix.MultiplyVector(boundCenter);
-            Vector3 max = camMatrix.MultiplyVector(playersBounds.max);
-            Vector3 min = camMatrix.MultiplyVector(playersBounds.min);
+            Vector3 boundsCenter = camMatrix.MultiplyVector(boundCenter);
+            Vector3 boundsMax = camMatrix.MultiplyVector(playersBounds.max);
+            Vector3 boundsMin = camMatrix.MultiplyVector(playersBounds.min);
+
 
             float orthoSize;
-            if ((playersBounds.size.x / playersBounds.size.y) >= cam.aspect)
+
+            // Wide bounds example
+            if (boundsAspect >= cam.aspect)
             {
-                orthoSize = (max.x - min.x) * cam.aspect / 2.0f;
+                orthoSize = (boundsMax.x - boundsMin.x) / (cam.aspect * 2.0f);
             }
+            // Tall bounds example
             else
             {
-                orthoSize = (max.y - min.y) / 2.0f;
+                orthoSize = (boundsMax.y - boundsMin.y) / 2.0f;
             }
 
-            float padding = orthoSize / 10;
-            orthoSize = Mathf.Max(orthoSize + padding, minCamOrthoSize);
-            cam.transform.position = new Vector3(center.x, cam.transform.position.y, cam.transform.position.z);
-  
+            orthoSize = Mathf.Max(orthoSize, minCamOrthoSize);
 
             cam.orthographicSize = orthoSize;
+            cam.transform.position = new Vector3(boundsCenter.x, cam.transform.position.y, cam.transform.position.z);
         }
     }
 
