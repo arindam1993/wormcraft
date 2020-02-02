@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 174e00b0cca904a868f6248b13c19ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoke: {fileID: 0}
 --- !u!199 &5769781193911878280
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -431,7 +432,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 3.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2

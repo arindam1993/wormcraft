@@ -8819,6 +8819,21 @@ PrefabInstance:
       propertyPath: InitialModule.startSize.scalar
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3929513298312150131, guid: 7561f3ec45ee44c17b3e8e95f1bc447b,
+        type: 3}
+      propertyPath: InitialModule.size3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909950926280963083, guid: 7561f3ec45ee44c17b3e8e95f1bc447b,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909950926280963083, guid: 7561f3ec45ee44c17b3e8e95f1bc447b,
+        type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1976417615322878925, guid: 7561f3ec45ee44c17b3e8e95f1bc447b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7561f3ec45ee44c17b3e8e95f1bc447b, type: 3}
