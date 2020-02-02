@@ -21,7 +21,7 @@ public class WormEnd : MonoBehaviour
         layerMask = LayerMask.NameToLayer("Grabbable");
         rbd = this.GetComponent<Rigidbody2D>();
         rend = this.GetComponent<SpriteRenderer>();
-        string otherName = this.gameObject.name == "End_A" ? "End_B" : "End_B";
+        string otherName = this.gameObject.name == "End_A" ? "End_B" : "End_A";
         otherEnd = this.transform.parent.Find(otherName).gameObject;
     }
 
