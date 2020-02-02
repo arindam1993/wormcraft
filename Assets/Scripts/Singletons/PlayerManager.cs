@@ -79,17 +79,19 @@ public class PlayerManager : MonoBehaviour
         if (players.Count > 0)
         {
             Bounds playersBounds = GetPlayersBoundingBox();
-            Vector3 boundCenter = playersBounds.center;
-            float boundsAspect = playersBounds.size.x / playersBounds.size.y;
 
+            Vector3 camCenter = cam.transform.position
             Matrix4x4 camMatrix = cam.worldToCameraMatrix;
-            Vector3 boundsCenter = camMatrix.MultiplyVector(boundCenter);
+
+            // Convert the bounds containing all players to camera space
+            Vector3 boundsCenter = camMatrix.MultiplyVector(playersBounds.center);
             Vector3 boundsMax = camMatrix.MultiplyVector(playersBounds.max);
             Vector3 boundsMin = camMatrix.MultiplyVector(playersBounds.min);
-
+            float boundsBottom = boundsMin.y;
+            float boundsTop = boundsMax.y;
+            float boundsAspect = playersBounds.size.x / playersBounds.size.y;
 
             float orthoSize;
-
             // Wide bounds example
             if (boundsAspect >= cam.aspect)
             {
@@ -101,7 +103,23 @@ public class PlayerManager : MonoBehaviour
                 orthoSize = (boundsMax.y - boundsMin.y) / 2.0f;
             }
 
+            // Make sure the screen doesn't become comically small
             orthoSize = Mathf.Max(orthoSize, minCamOrthoSize);
+
+            // We already made room for the largest dimension, but it may be off the frame in y still (because y is fixed)
+            float nextCamBottom = camCenter.y - orthoSize;
+            float nextCamTop = camCenter.y + orthoSize;
+
+            // Fix for being off the bottom
+            if (boundsBottom < nextCamBottom) {
+                orthoSize += nextCamBottom - boundsBottom;
+            }
+
+            // Fix for being off the top
+            if (boundsTop > nextCamTop)
+            {
+                orthoSize += boundsTop - nextCamTop;
+            }
 
             cam.orthographicSize = orthoSize;
             cam.transform.position = new Vector3(boundsCenter.x, cam.transform.position.y, cam.transform.position.z);
