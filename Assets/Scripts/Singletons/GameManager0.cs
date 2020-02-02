@@ -13,6 +13,10 @@ public class GameManager0 : MonoBehaviour
     public TextMeshProUGUI distanceText;
     public TextMeshProUGUI percentFixed;
 
+    public TextMeshProUGUI[] respawnTimers;
+
+
+
     private string DISTANCE = "Distance";
     private string PERCENTAGE = "Percentage Fixed : ";
 
