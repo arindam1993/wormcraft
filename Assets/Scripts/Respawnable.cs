@@ -10,11 +10,13 @@ public class Respawnable : MonoBehaviour
     public float RespawnTime;
     BaseDisableable disableTarget;
     bool isRespawning = false;
+    Player player;
 
     // Start is called before the first frame update
     void Start()
     {
         disableTarget = this.gameObject.GetComponent<BaseDisableable>();
+        player = this.gameObject.GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -26,9 +28,9 @@ public class Respawnable : MonoBehaviour
             if (isRespawning)
             {
                 StartCoroutine(Respawn());
+                StartCoroutine(RespawnTimer());
             }
-            isRespawning = true;
-            
+            isRespawning = true;        
         }
     }
 
@@ -40,5 +42,20 @@ public class Respawnable : MonoBehaviour
         this.transform.position = new Vector3(Camera.main.transform.position.x, TopY, 0);
         disableTarget.WormcraftEnable();
         isRespawning = false;
+        
+        if(player != null)
+        {
+            yield return new WaitForSeconds(1.0f);
+            GameManager0.Instance.respawnTimers[player.PlayerIndex].text = "";
+        }
+    }
+
+    IEnumerator RespawnTimer()
+    {
+        for(int i= (int)RespawnTime + 1; i >= 0; i--)
+        {
+            GameManager0.Instance.respawnTimers[player.PlayerIndex].text = i+"";
+            yield return new WaitForSeconds(1.0f);
+        }
     }
 }
