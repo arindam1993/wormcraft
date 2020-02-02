@@ -86,11 +86,22 @@ public class PlayerManager : MonoBehaviour
             Vector3 max = camMatrix.MultiplyVector(playersBounds.max);
             Vector3 min = camMatrix.MultiplyVector(playersBounds.min);
 
-            float orthoSize = Mathf.Max((max.y - min.y) / 2.0f, minCamOrthoSize);
-            cam.transform.position = new Vector3(center.x, center.y, cam.transform.position.z);
-            float padding = orthoSize / 5;
+            float orthoSize;
+            if ((playersBounds.size.x / playersBounds.size.y) >= cam.aspect)
+            {
+                orthoSize = (max.x - min.x) * cam.aspect / 2.0f;
+            }
+            else
+            {
+                orthoSize = (max.y - min.y) / 2.0f;
+            }
 
-            cam.orthographicSize = orthoSize + padding;
+            float padding = orthoSize / 10;
+            orthoSize = Mathf.Max(orthoSize + padding, minCamOrthoSize);
+            cam.transform.position = new Vector3(center.x, cam.transform.position.y, cam.transform.position.z);
+  
+
+            cam.orthographicSize = orthoSize;
         }
     }
 
