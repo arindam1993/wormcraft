@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WormEnd : MonoBehaviour
 {
-    public Rigidbody2D grabbableObject;
+    private Rigidbody2D grabbableObject;
     public float grabRadius;
 
     //This joint is dynmically created in order to grab things
@@ -12,25 +12,35 @@ public class WormEnd : MonoBehaviour
 
     private int layerMask;
     private Rigidbody2D rbd;
+    private SpriteRenderer rend;
+    private GameObject otherEnd;
 
     // Start is called before the first frame update
     void Start()
     {
         layerMask = LayerMask.NameToLayer("Grabbable");
         rbd = this.GetComponent<Rigidbody2D>();
+        rend = this.GetComponent<SpriteRenderer>();
+        string otherName = this.gameObject.name == "End_A" ? "End_B" : "End_B";
+        otherEnd = this.transform.parent.Find(otherName).gameObject;
     }
 
     private void FixedUpdate()
     {
         Collider2D[] overlaps = Physics2D.OverlapCircleAll(this.transform.position, grabRadius, 1 << layerMask);
         Collider2D overlap = null;
-        //Find first object that is not myself
+        float minDistance = 999999.0f;
+        //Find closest object that is not myself and the other end of thesame worm
         foreach( Collider2D overlapped in overlaps)
         {
-            if(overlapped.gameObject != this.gameObject)
+            if(overlapped.gameObject != this.gameObject && overlapped.gameObject != otherEnd)
             {
-                overlap = overlapped;
-                break;
+                float distance = Vector2.Distance(this.transform.position, overlapped.transform.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    overlap = overlapped;
+                }
             }
         }
 
@@ -44,6 +54,18 @@ public class WormEnd : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (!IsGrabbing())
+        {
+            rend.color = Color.white;
+        }
+        else
+        {
+            rend.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+        }
+    }
+
     public void Grab()
     {
         if(grabbableObject != null && this.grabJoint == null)
@@ -51,6 +73,7 @@ public class WormEnd : MonoBehaviour
             //Grab by creating a fixed joint between this end and the grabbable object
             grabJoint = this.gameObject.AddComponent<FixedJoint2D>();
             grabJoint.connectedBody = grabbableObject;
+
 
             //TODO: sound
         }

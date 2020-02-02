@@ -50,8 +50,8 @@ public class PlayerActions : PlayerActionSet
 		var actions = new PlayerActions();
 
 		actions.Join.AddDefaultBinding( InputControlType.Command );
-        actions.GrabA.AddDefaultBinding( InputControlType.Button1 );
-        actions.GrabB.AddDefaultBinding(InputControlType.Button2);
+        actions.GrabA.AddDefaultBinding( InputControlType.Action1 );
+        actions.GrabB.AddDefaultBinding(InputControlType.Action2);
 
         actions.Up.AddDefaultBinding( InputControlType.LeftStickUp );
 		actions.Down.AddDefaultBinding( InputControlType.LeftStickDown );
