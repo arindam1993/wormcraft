@@ -37,8 +37,12 @@ public class Player : MonoBehaviour
                 //currentRenderer.color = newColor;
             }
         }
+        Color playerColor = playerColors[PlayerIndex];
         endA = this.transform.Find("End_A").GetComponent<WormEnd>();
+        endA.transform.Find("Outline").GetComponent<SpriteRenderer>().color = playerColor;
+
         endB = this.transform.Find("End_B").GetComponent<WormEnd>();
+        endB.transform.Find("Outline").GetComponent<SpriteRenderer>().color = playerColor;
     }
 
 
@@ -73,17 +77,14 @@ public class Player : MonoBehaviour
     WormEnd GetFreeEnd()
     {   
         //No end is free
-        if(endA.IsGrabbing() && endB.IsGrabbing())
+        if(endA.IsGrabbingStatic() && endB.IsGrabbingStatic())
         {
             return null;
         }
 
-        if(!endA.IsGrabbing() && !endB.IsGrabbing())
-        {
-            return null;
-        }
+        
 
-        return !endA.IsGrabbing() ? endA : endB;
+        return endA.IsGrabbingStatic() ? endB : endA;
     } 
 
 }

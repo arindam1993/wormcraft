@@ -103,4 +103,9 @@ public class WormEnd : MonoBehaviour
     {
         return this.grabJoint != null;
     }
+
+    public bool IsGrabbingStatic()
+    {
+        return this.grabJoint != null && this.grabJoint.connectedBody.isKinematic;
+    }
 }
