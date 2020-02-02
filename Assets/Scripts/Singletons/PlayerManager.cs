@@ -11,6 +11,8 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject playerPrefab;
     public Camera cam;
+    private float minCamOrthoSize;
+
 
     const int maxPlayers = 4;
 
@@ -44,6 +46,11 @@ public class PlayerManager : MonoBehaviour
         keyboardListener.Destroy();
     }
 
+    private void Awake()
+    {
+        minCamOrthoSize = cam.orthographicSize;
+    }
+
 
     void Update()
     {
@@ -59,10 +66,10 @@ public class PlayerManager : MonoBehaviour
 
         if (JoinButtonWasPressedOnListener(keyboardListener))
         {
-            if (ThereIsNoPlayerUsingKeyboard())
-            {
+            //if (ThereIsNoPlayerUsingKeyboard())
+            //{
                 CreatePlayer(null);
-            }
+            //}
         }
     }
 
@@ -71,11 +78,19 @@ public class PlayerManager : MonoBehaviour
 
         if (players.Count > 0)
         {
-            Vector3 boundCenter = GetPlayersCenterPosition();
+            Bounds playersBounds = GetPlayersBoundingBox();
+            Vector3 boundCenter = playersBounds.center;
+
             Matrix4x4 camMatrix = cam.worldToCameraMatrix;
-            Vector3 cameraBoundCenter = camMatrix.MultiplyVector(boundCenter);
-            Debug.Log(cameraBoundCenter);
-            cam.transform.position = new Vector3(cameraBoundCenter.x, cameraBoundCenter.y, cam.transform.position.z);
+            Vector3 center = camMatrix.MultiplyVector(boundCenter);
+            Vector3 max = camMatrix.MultiplyVector(playersBounds.max);
+            Vector3 min = camMatrix.MultiplyVector(playersBounds.min);
+
+            float orthoSize = Mathf.Max((max.y - min.y) / 2.0f, minCamOrthoSize);
+            cam.transform.position = new Vector3(center.x, center.y, cam.transform.position.z);
+            float padding = orthoSize / 5;
+
+            cam.orthographicSize = orthoSize + padding;
         }
     }
 
@@ -185,17 +200,17 @@ public class PlayerManager : MonoBehaviour
         Destroy(player.gameObject);
     }
 
-    private Vector3 GetPlayersCenterPosition()
+    private Bounds GetPlayersBoundingBox()
     {
-        Bounds allPlayerBounds = new Bounds(players[0].Center.position, new Vector3());
+        Bounds allPlayersBounds = new Bounds(players[0].Center.position, new Vector3());
         players.ForEach((player) =>
         {
             if (player.Center != null)
             {
-                allPlayerBounds.Encapsulate(player.Center.position);
+                allPlayersBounds.Encapsulate(player.Center.position);
             }
         });
 
-        return allPlayerBounds.center;
+        return allPlayersBounds;
     }
 }
