@@ -1,6 +1,7 @@
 
 using InControl;
 using UnityEngine;
+using System.Collections.Generic;
 
 
 // This is just a simple "player" script that rotates and colors a cube
@@ -16,17 +17,28 @@ public class Player : MonoBehaviour
     Color[] playerColors = { Color.green, Color.red, Color.blue, Color.yellow };
     public float forceMultiplier;
 
-    SpriteRenderer cachedRenderer;
+    List<SpriteRenderer> cachedRenderers = new List<SpriteRenderer>();
     WormEnd endA;
     WormEnd endB;
 
 
 	void Start()
 	{
-        cachedRenderer = this.transform.Find("Center").GetComponent<SpriteRenderer>();
+        int count = this.transform.childCount;
+        for (int i=0; i < count; i++)
+        {
+            Transform child = this.transform.GetChild(i);
+            if (child.gameObject.name.Contains("Seg"))
+            {
+                SpriteRenderer currentRenderer = child.gameObject.GetComponent<SpriteRenderer>();
+                cachedRenderers.Add(currentRenderer);
+                //Color newColor = playerColors[PlayerIndex] * 0.3f;
+                //newColor.a = 1.0f;
+                //currentRenderer.color = newColor;
+            }
+        }
         endA = this.transform.Find("End_A").GetComponent<WormEnd>();
         endB = this.transform.Find("End_B").GetComponent<WormEnd>();
-        cachedRenderer.color = playerColors[PlayerIndex];
     }
 
 
