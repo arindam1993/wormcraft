@@ -80,24 +80,22 @@ public class PlayerManager : MonoBehaviour
         {
             Bounds playersBounds = GetPlayersBoundingBox();
 
-            Vector3 camCenter = cam.transform.position
-            Matrix4x4 camMatrix = cam.worldToCameraMatrix;
+            Vector3 camCenter = cam.transform.position;
 
-            // Convert the bounds containing all players to camera space
-            Vector3 boundsCenter = camMatrix.MultiplyVector(playersBounds.center);
-            Vector3 boundsMax = camMatrix.MultiplyVector(playersBounds.max);
-            Vector3 boundsMin = camMatrix.MultiplyVector(playersBounds.min);
+            Vector3 boundsCenter = playersBounds.center;
+            Vector3 boundsMax = playersBounds.max;
+            Vector3 boundsMin = playersBounds.min;
             float boundsBottom = boundsMin.y;
             float boundsTop = boundsMax.y;
             float boundsAspect = playersBounds.size.x / playersBounds.size.y;
 
             float orthoSize;
-            // Wide bounds example
+            // Wide bounds case
             if (boundsAspect >= cam.aspect)
             {
                 orthoSize = (boundsMax.x - boundsMin.x) / (cam.aspect * 2.0f);
             }
-            // Tall bounds example
+            // Tall bounds case
             else
             {
                 orthoSize = (boundsMax.y - boundsMin.y) / 2.0f;
