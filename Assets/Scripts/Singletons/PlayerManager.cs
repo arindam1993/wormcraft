@@ -231,7 +231,7 @@ public class PlayerManager : MonoBehaviour
             orthoSize = (boundsMax.y - boundsMin.y) / 2.0f;
         }
 
-        float padding = (orthoSize / 8.0f);
+        float padding = (orthoSize / 5.0f);
         // Make sure the screen doesn't become comically small
         orthoSize = Mathf.Max(orthoSize + padding, minCamOrthoSize);
 
