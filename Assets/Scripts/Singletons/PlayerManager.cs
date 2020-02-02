@@ -64,13 +64,18 @@ public class PlayerManager : MonoBehaviour
                 CreatePlayer(null);
             }
         }
+    }
+
+    void LateUpdate()
+    {
 
         if (players.Count > 0)
         {
-            Vector3 val = GetCameraLookPosition();
-            //cam.transform.position = GetCameraLookPosition();
-            cam.transform.LookAt(GetCameraLookPosition());
-            Debug.Log(val);
+            Vector3 boundCenter = GetPlayersCenterPosition();
+            Matrix4x4 camMatrix = cam.worldToCameraMatrix;
+            Vector3 cameraBoundCenter = camMatrix.MultiplyVector(boundCenter);
+            Debug.Log(cameraBoundCenter);
+            cam.transform.position = new Vector3(cameraBoundCenter.x, cameraBoundCenter.y, cam.transform.position.z);
         }
     }
 
@@ -180,12 +185,15 @@ public class PlayerManager : MonoBehaviour
         Destroy(player.gameObject);
     }
 
-    private Vector3 GetCameraLookPosition()
+    private Vector3 GetPlayersCenterPosition()
     {
-        Bounds allPlayerBounds = new Bounds();
+        Bounds allPlayerBounds = new Bounds(players[0].Center.position, new Vector3());
         players.ForEach((player) =>
         {
-            allPlayerBounds.Encapsulate(player.transform.position);
+            if (player.Center != null)
+            {
+                allPlayerBounds.Encapsulate(player.Center.position);
+            }
         });
 
         return allPlayerBounds.center;

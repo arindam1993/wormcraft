@@ -20,11 +20,14 @@ public class Player : MonoBehaviour
     Rigidbody2D endA;
     Rigidbody2D endB;
 
+    public Transform Center { get; set; }
+
     void Start()
 	{
         cachedRenderer = this.transform.Find("Center").GetComponent<SpriteRenderer>();
         endA = this.transform.Find("End_A").GetComponent<Rigidbody2D>();
         endB = this.transform.Find("End_B").GetComponent<Rigidbody2D>();
+        Center = this.transform.Find("Center").GetComponent<Transform>();
         cachedRenderer.color = playerColors[PlayerIndex];
     }
 
