@@ -43,6 +43,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlayThrowFX()
     {
-
+        ThrowFx.Play();
     }
 }
