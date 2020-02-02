@@ -32,7 +32,6 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-        Debug.Log(Actions.joystick.Value);
         endB.AddForce(Actions.joystick.Value * forceMultiplier);
 	}
 
