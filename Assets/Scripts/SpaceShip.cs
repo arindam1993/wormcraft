@@ -29,9 +29,11 @@ public class SpaceShip : BaseDisableable
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.gameObject.CompareTag("Tools"))
+        Debug.Log("collision");
+        Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.CompareTag("Tools"))
         {
             this.addToFixed();
         }
@@ -41,7 +43,7 @@ public class SpaceShip : BaseDisableable
     {
         if (PercentageFixed <= 100)
         {
-            PercentageFixed += 5;
+            PercentageFixed += 10;
         }
         smoke_main.startSize = smoke_main.startSize.constant - 0.1f;
     }
