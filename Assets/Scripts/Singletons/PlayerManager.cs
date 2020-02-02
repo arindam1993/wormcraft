@@ -46,6 +46,7 @@ public class PlayerManager : MonoBehaviour
         keyboardListener.Destroy();
     }
 
+
     private void Awake()
     {
         minCamOrthoSize = cam.orthographicSize;
@@ -66,61 +67,22 @@ public class PlayerManager : MonoBehaviour
 
         if (JoinButtonWasPressedOnListener(keyboardListener))
         {
-            if (ThereIsNoPlayerUsingKeyboard())
+            //if (ThereIsNoPlayerUsingKeyboard())
             {
                 CreatePlayer(null);
             }
         }
     }
 
+
     void LateUpdate()
     {
 
         if (players.Count > 0)
         {
-            Bounds playersBounds = GetPlayersBoundingBox();
-
-            Vector3 camCenter = cam.transform.position;
-
-            Vector3 boundsCenter = playersBounds.center;
-            Vector3 boundsMax = playersBounds.max;
-            Vector3 boundsMin = playersBounds.min;
-            float boundsBottom = boundsMin.y;
-            float boundsTop = boundsMax.y;
-            float boundsAspect = playersBounds.size.x / playersBounds.size.y;
-
-            float orthoSize;
-            // Wide bounds case
-            if (boundsAspect >= cam.aspect)
-            {
-                orthoSize = (boundsMax.x - boundsMin.x) / (cam.aspect * 2.0f);
-            }
-            // Tall bounds case
-            else
-            {
-                orthoSize = (boundsMax.y - boundsMin.y) / 2.0f;
-            }
-
-            // Make sure the screen doesn't become comically small
-            orthoSize = Mathf.Max(orthoSize, minCamOrthoSize);
-
-            // We already made room for the largest dimension, but it may be off the frame in y still (because y is fixed)
-            float nextCamBottom = camCenter.y - orthoSize;
-            float nextCamTop = camCenter.y + orthoSize;
-
-            // Fix for being off the bottom
-            if (boundsBottom < nextCamBottom) {
-                orthoSize += nextCamBottom - boundsBottom;
-            }
-
-            // Fix for being off the top
-            if (boundsTop > nextCamTop)
-            {
-                orthoSize += boundsTop - nextCamTop;
-            }
-
-            cam.orthographicSize = orthoSize;
-            cam.transform.position = new Vector3(boundsCenter.x, cam.transform.position.y, cam.transform.position.z);
+            Bounds bounds = GetPlayersBoundingBox();
+            cam.orthographicSize = GetOrthographicSizeFitBounds(bounds);
+            cam.transform.position = GetCameraPositionFollowBounds(bounds);
         }
     }
 
@@ -230,6 +192,7 @@ public class PlayerManager : MonoBehaviour
         Destroy(player.gameObject);
     }
 
+
     private Bounds GetPlayersBoundingBox()
     {
         Bounds allPlayersBounds = new Bounds(players[0].Center.position, new Vector3());
@@ -242,5 +205,57 @@ public class PlayerManager : MonoBehaviour
         });
 
         return allPlayersBounds;
+    }
+
+
+    private float GetOrthographicSizeFitBounds(Bounds playersBounds)
+    {
+        Vector3 camCenter = cam.transform.position;
+
+        Vector3 boundsCenter = playersBounds.center;
+        Vector3 boundsMax = playersBounds.max;
+        Vector3 boundsMin = playersBounds.min;
+        float boundsBottom = boundsMin.y;
+        float boundsTop = boundsMax.y;
+        float boundsAspect = playersBounds.size.x / playersBounds.size.y;
+
+        float orthoSize;
+        // Wide bounds case
+        if (boundsAspect >= cam.aspect)
+        {
+            orthoSize = (boundsMax.x - boundsMin.x) / (cam.aspect * 2.0f);
+        }
+        // Tall bounds case
+        else
+        {
+            orthoSize = (boundsMax.y - boundsMin.y) / 2.0f;
+        }
+
+        // Make sure the screen doesn't become comically small
+        orthoSize = Mathf.Max(orthoSize, minCamOrthoSize);
+
+        // We already made room for the largest dimension, but it may be off the frame in y still (because y is fixed)
+        float nextCamBottom = camCenter.y - orthoSize;
+        float nextCamTop = camCenter.y + orthoSize;
+
+        // Fix for being off the bottom
+        if (boundsBottom < nextCamBottom)
+        {
+            orthoSize += nextCamBottom - boundsBottom;
+        }
+
+        // Fix for being off the top
+        if (boundsTop > nextCamTop)
+        {
+            orthoSize += boundsTop - nextCamTop;
+        }
+
+        return orthoSize;
+    }
+
+
+    Vector3 GetCameraPositionFollowBounds(Bounds bounds)
+    {
+        return new Vector3(bounds.center.x, cam.transform.position.y, cam.transform.position.z);
     }
 }
