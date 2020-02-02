@@ -52,10 +52,17 @@ public class Respawnable : MonoBehaviour
 
     IEnumerator RespawnTimer()
     {
-        for(int i= (int)RespawnTime + 1; i >= 0; i--)
+        if (player != null)
         {
-            GameManager0.Instance.respawnTimers[player.PlayerIndex].text = i+"";
-            yield return new WaitForSeconds(1.0f);
+            for (int i = (int)RespawnTime + 1; i >= 0; i--)
+            {
+                GameManager0.Instance.respawnTimers[player.PlayerIndex].text = i + "";
+                yield return new WaitForSeconds(1.0f);
+            }
+            if (!isRespawning)
+            {
+                GameManager0.Instance.respawnTimers[player.PlayerIndex].text = "";
+            }
         }
     }
 }

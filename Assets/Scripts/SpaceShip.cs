@@ -29,7 +29,7 @@ public class SpaceShip : BaseDisableable
 
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("collision");
         Debug.Log(collision.gameObject.tag);
@@ -37,6 +37,7 @@ public class SpaceShip : BaseDisableable
         {
             this.addToFixed();
         }
+        Destroy(collision.gameObject);
     }
 
     public void addToFixed()
