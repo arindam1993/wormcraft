@@ -258,4 +258,10 @@ public class PlayerManager : MonoBehaviour
     {
         return new Vector3(bounds.center.x, cam.transform.position.y, cam.transform.position.z);
     }
+
+
+    public List<Player> GetPlayers()
+    {
+        return players;
+    }
 }
