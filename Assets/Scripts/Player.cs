@@ -17,23 +17,62 @@ public class Player : MonoBehaviour
     public float forceMultiplier;
 
     SpriteRenderer cachedRenderer;
-    Rigidbody2D endA;
-    Rigidbody2D endB;
+    WormEnd endA;
+    WormEnd endB;
 
 
 	void Start()
 	{
         cachedRenderer = this.transform.Find("Center").GetComponent<SpriteRenderer>();
-        endA = this.transform.Find("End_A").GetComponent<Rigidbody2D>();
-        endB = this.transform.Find("End_B").GetComponent<Rigidbody2D>();
+        endA = this.transform.Find("End_A").GetComponent<WormEnd>();
+        endB = this.transform.Find("End_B").GetComponent<WormEnd>();
         cachedRenderer.color = playerColors[PlayerIndex];
     }
 
 
 	void Update()
 	{
-        endB.AddForce(Actions.joystick.Value * forceMultiplier);
-	}
+        if (Actions.GrabA.IsPressed)
+        {
+            endA.Release();
+        }
+        else
+        {
+            endA.Grab();
+        }
+
+        if (Actions.GrabB.IsPressed)
+        {
+            endB.Release();
+        }
+        else
+        {
+            endB.Grab();
+        }
+        WormEnd grabEnd = GetFreeEnd();
+        if(grabEnd != null)
+        {
+            grabEnd.ApplyForce(Actions.joystick.Value * forceMultiplier);
+        }
+        
+    }
+    
+    // returns a worm end only when one end is free
+    WormEnd GetFreeEnd()
+    {   
+        //No end is free
+        if(endA.IsGrabbing() && endB.IsGrabbing())
+        {
+            return null;
+        }
+
+        if(!endA.IsGrabbing() && !endB.IsGrabbing())
+        {
+            return null;
+        }
+
+        return !endA.IsGrabbing() ? endA : endB;
+    } 
 
 }
 

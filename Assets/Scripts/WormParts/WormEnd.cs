@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WormEnd : MonoBehaviour
 {
-    private Rigidbody2D grabbableObject;
+    public Rigidbody2D grabbableObject;
+    public float grabRadius;
 
     //This joint is dynmically created in order to grab things
     private FixedJoint2D grabJoint;
@@ -21,10 +22,25 @@ public class WormEnd : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Collider2D overlap = Physics2D.OverlapCircle(this.transform.position, 3.0f, layerMask);
+        Collider2D[] overlaps = Physics2D.OverlapCircleAll(this.transform.position, grabRadius, 1 << layerMask);
+        Collider2D overlap = null;
+        //Find first object that is not myself
+        foreach( Collider2D overlapped in overlaps)
+        {
+            if(overlapped.gameObject != this.gameObject)
+            {
+                overlap = overlapped;
+                break;
+            }
+        }
+
         if(overlap != null)
         {
             grabbableObject = overlap.gameObject.GetComponent<Rigidbody2D>();
+        }
+        else
+        {
+            grabbableObject = null;
         }
     }
 

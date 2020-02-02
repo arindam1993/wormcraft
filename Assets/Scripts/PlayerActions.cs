@@ -9,7 +9,9 @@ public class PlayerActions : PlayerActionSet
 	public PlayerAction Up;
 	public PlayerAction Down;
 	public PlayerAction Join;
-	public PlayerTwoAxisAction joystick;
+    public PlayerAction GrabA;
+    public PlayerAction GrabB;
+    public PlayerTwoAxisAction joystick;
 
 
 	public PlayerActions()
@@ -19,6 +21,9 @@ public class PlayerActions : PlayerActionSet
 		Up = CreatePlayerAction( "Up" );
 		Down = CreatePlayerAction( "Down" );
 		Join = CreatePlayerAction("Join");
+
+        GrabA = CreatePlayerAction("GrabA");
+        GrabB = CreatePlayerAction("GrabB");
 		joystick = CreateTwoAxisPlayerAction( Left, Right, Down, Up );
 	}
 
@@ -28,8 +33,10 @@ public class PlayerActions : PlayerActionSet
 		var actions = new PlayerActions();
 
 		actions.Join.AddDefaultBinding( Key.Space );
+        actions.GrabA.AddDefaultBinding(Key.Z);
+        actions.GrabB.AddDefaultBinding(Key.X);
 
-		actions.Up.AddDefaultBinding( Key.UpArrow );
+        actions.Up.AddDefaultBinding( Key.UpArrow );
 		actions.Down.AddDefaultBinding( Key.DownArrow );
 		actions.Left.AddDefaultBinding( Key.LeftArrow );
 		actions.Right.AddDefaultBinding( Key.RightArrow );
@@ -43,8 +50,10 @@ public class PlayerActions : PlayerActionSet
 		var actions = new PlayerActions();
 
 		actions.Join.AddDefaultBinding( InputControlType.Command );
+        actions.GrabA.AddDefaultBinding( InputControlType.Button1 );
+        actions.GrabB.AddDefaultBinding(InputControlType.Button2);
 
-		actions.Up.AddDefaultBinding( InputControlType.LeftStickUp );
+        actions.Up.AddDefaultBinding( InputControlType.LeftStickUp );
 		actions.Down.AddDefaultBinding( InputControlType.LeftStickDown );
 		actions.Left.AddDefaultBinding( InputControlType.LeftStickLeft );
 		actions.Right.AddDefaultBinding( InputControlType.LeftStickRight );

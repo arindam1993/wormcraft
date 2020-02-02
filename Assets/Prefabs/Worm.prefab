@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7512992611577724132}
   - component: {fileID: 7512992611577724130}
   - component: {fileID: 7512992611577724131}
+  - component: {fileID: 158065581160104343}
   m_Layer: 0
   m_Name: End_B
   m_TagString: Untagged
@@ -100,7 +101,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &7512992611577724131
 CircleCollider2D:
@@ -118,6 +119,20 @@ CircleCollider2D:
   m_Offset: {x: 0.0000038146973, y: 0}
   serializedVersion: 2
   m_Radius: 2.56
+--- !u!114 &158065581160104343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7512992611577724134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6f502009979294d86f0a1658b3f399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabbableObject: {fileID: 0}
+  grabRadius: 0.25
 --- !u!1 &7512992611633032132
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +197,7 @@ GameObject:
   - component: {fileID: 2890537745667105464}
   - component: {fileID: 7023098529560885885}
   - component: {fileID: 771373561734098081}
-  - component: {fileID: 8951226880976538676}
+  - component: {fileID: 2143694392114937265}
   m_Layer: 0
   m_Name: End_A
   m_TagString: Untagged
@@ -271,7 +286,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &7512992611803846743
 CircleCollider2D:
@@ -349,30 +364,20 @@ SpringJoint2D:
   m_Distance: 0.9394146
   m_DampingRatio: 0
   m_Frequency: 6
---- !u!233 &8951226880976538676
-HingeJoint2D:
+--- !u!114 &2143694392114937265
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7512992611803846731}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_EnableCollision: 1
-  m_ConnectedRigidBody: {fileID: 7512992612747473437}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 2.5, y: 0}
-  m_ConnectedAnchor: {x: -0.5, y: 0}
-  m_UseMotor: 0
-  m_Motor:
-    m_MotorSpeed: 0
-    m_MaximumMotorForce: 10000
-  m_UseLimits: 1
-  m_AngleLimits:
-    m_LowerAngle: -15
-    m_UpperAngle: 15
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6f502009979294d86f0a1658b3f399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabbableObject: {fileID: 0}
+  grabRadius: 0.25
 --- !u!1 &7512992612001229076
 GameObject:
   m_ObjectHideFlags: 0
