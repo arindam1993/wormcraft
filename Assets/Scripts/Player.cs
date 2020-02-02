@@ -21,8 +21,9 @@ public class Player : MonoBehaviour
     WormEnd endA;
     WormEnd endB;
 
+    public Transform Center { get; set; }
 
-	void Start()
+    void Start()
 	{
         int count = this.transform.childCount;
         for (int i=0; i < count; i++)
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour
 
         endB = this.transform.Find("End_B").GetComponent<WormEnd>();
         endB.transform.Find("Outline").GetComponent<SpriteRenderer>().color = playerColor;
+        Center = this.transform.Find("Seg4").GetComponent<Transform>();
     }
 
 
@@ -82,11 +84,8 @@ public class Player : MonoBehaviour
             return null;
         }
 
-        
-
         return endA.IsGrabbingStatic() ? endB : endA;
     } 
-
 }
 
 
