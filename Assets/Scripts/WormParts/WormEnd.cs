@@ -93,7 +93,7 @@ public class WormEnd : MonoBehaviour
 
     public void ApplyForce(Vector2 force)
     {
-        if (!this.IsGrabbing())
+        if (!this.IsGrabbingStatic())
         {
             rbd.AddForce(force);
         }

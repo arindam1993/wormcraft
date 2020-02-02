@@ -270,6 +270,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: bridge1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6421762195018366839, guid: 694499eecd54d49a4a24c91d2ec19f98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 694499eecd54d49a4a24c91d2ec19f98, type: 3}
 --- !u!1 &177709989
@@ -541,7 +546,8 @@ GameObject:
   - component: {fileID: 608362647}
   - component: {fileID: 608362646}
   - component: {fileID: 608362648}
-  m_Layer: 0
+  - component: {fileID: 608362649}
+  m_Layer: 8
   m_Name: TilemapEnvironment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1544,6 +1550,27 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+--- !u!50 &608362649
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608362644}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &702619263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1635,6 +1662,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: bridge1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421762195018366839, guid: 694499eecd54d49a4a24c91d2ec19f98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 694499eecd54d49a4a24c91d2ec19f98, type: 3}
@@ -1855,6 +1887,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: bridge1 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421762195018366839, guid: 694499eecd54d49a4a24c91d2ec19f98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 694499eecd54d49a4a24c91d2ec19f98, type: 3}
@@ -2147,6 +2184,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: bridge1 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6421762195018366839, guid: 694499eecd54d49a4a24c91d2ec19f98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 694499eecd54d49a4a24c91d2ec19f98, type: 3}
 --- !u!1 &1683618450
@@ -2436,6 +2478,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: bridge1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6421762195018366839, guid: 694499eecd54d49a4a24c91d2ec19f98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 694499eecd54d49a4a24c91d2ec19f98, type: 3}
 --- !u!1001 &1765274311
@@ -2529,6 +2576,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: bridge1 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421762195018366839, guid: 694499eecd54d49a4a24c91d2ec19f98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 694499eecd54d49a4a24c91d2ec19f98, type: 3}
@@ -2871,6 +2923,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: bridge1 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 6421762195018366839, guid: 694499eecd54d49a4a24c91d2ec19f98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 694499eecd54d49a4a24c91d2ec19f98, type: 3}
 --- !u!1001 &1129612656192423650
@@ -3118,6 +3175,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: bridge1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421762195018366839, guid: 694499eecd54d49a4a24c91d2ec19f98,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 694499eecd54d49a4a24c91d2ec19f98, type: 3}

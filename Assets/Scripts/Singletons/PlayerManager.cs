@@ -66,10 +66,10 @@ public class PlayerManager : MonoBehaviour
 
         if (JoinButtonWasPressedOnListener(keyboardListener))
         {
-            //if (ThereIsNoPlayerUsingKeyboard())
-            //{
+            if (ThereIsNoPlayerUsingKeyboard())
+            {
                 CreatePlayer(null);
-            //}
+            }
         }
     }
 
