@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpaceShip : MonoBehaviour
+public class SpaceShip : BaseDisableable
 {
 
     public ParticleSystem smoke;
@@ -42,5 +42,19 @@ public class SpaceShip : MonoBehaviour
     public float GetPercentFixed()
     {
         return PercentageFixed;
+    }
+
+    public override void WormcraftDisable()
+    {
+        base.WormcraftDisable();
+        this.GetComponent<Rigidbody2D>().simulated = false;
+        this.GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    public override void WormcraftEnable()
+    {
+        base.WormcraftEnable();
+        this.GetComponent<Rigidbody2D>().simulated = true;
+        this.GetComponent<SpriteRenderer>().enabled = true;
     }
 }
