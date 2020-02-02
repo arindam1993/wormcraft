@@ -195,13 +195,12 @@ public class PlayerManager : MonoBehaviour
 
     private Bounds GetPlayersBoundingBox()
     {
-        Bounds allPlayersBounds = new Bounds(players[0].Center.position, new Vector3());
+        Bounds allPlayersBounds = new Bounds(players[0].displayBounds.min, new Vector3(0,0,0));
+
         players.ForEach((player) =>
         {
-            if (player.Center != null)
-            {
-                allPlayersBounds.Encapsulate(player.Center.position);
-            }
+            allPlayersBounds.Encapsulate(player.displayBounds.min);
+            allPlayersBounds.Encapsulate(player.displayBounds.max);
         });
 
         return allPlayersBounds;

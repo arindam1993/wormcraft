@@ -5,7 +5,6 @@ using UnityEngine;
 public class WormEnd : MonoBehaviour
 {
     private Rigidbody2D grabbableObject;
-    public float grabRadius;
 
     //This joint is dynmically created in order to grab things
     private FixedJoint2D grabJoint;
@@ -15,12 +14,16 @@ public class WormEnd : MonoBehaviour
     private SpriteRenderer rend;
     private GameObject otherEnd;
 
+    public float grabRadius;
+    public Bounds displayBounds;
+
     // Start is called before the first frame update
     void Start()
     {
         layerMask = LayerMask.NameToLayer("Grabbable");
         rbd = this.GetComponent<Rigidbody2D>();
         rend = this.GetComponent<SpriteRenderer>();
+        displayBounds = rend.bounds;
         string otherName = this.gameObject.name == "End_A" ? "End_B" : "End_A";
         otherEnd = this.transform.parent.Find(otherName).gameObject;
     }
@@ -64,6 +67,8 @@ public class WormEnd : MonoBehaviour
         {
             rend.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
         }
+
+        displayBounds = rend.bounds;
     }
 
     public void Grab()

@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     WormEnd endA;
     WormEnd endB;
 
-    public Transform Center { get; set; }
+    public Bounds displayBounds { get; set; }
 
     void Start()
 	{
@@ -44,7 +44,8 @@ public class Player : MonoBehaviour
 
         endB = this.transform.Find("End_B").GetComponent<WormEnd>();
         endB.transform.Find("Outline").GetComponent<SpriteRenderer>().color = playerColor;
-        Center = this.transform.Find("Seg4").GetComponent<Transform>();
+
+        displayBounds = CalcDisplayBounds();
     }
 
 
@@ -72,9 +73,23 @@ public class Player : MonoBehaviour
         {
             grabEnd.ApplyForce(Actions.joystick.Value * forceMultiplier);
         }
-        
+
+        displayBounds = CalcDisplayBounds();
     }
-    
+
+
+    Bounds CalcDisplayBounds()
+    {
+        // Encapsulate both our end parts into our single display bounds
+        Bounds bounds = new Bounds(endA.displayBounds.min, new Vector3(0, 0, 0));
+        bounds.Encapsulate(endA.displayBounds.max);
+        bounds.Encapsulate(endB.displayBounds.min);
+        bounds.Encapsulate(endB.displayBounds.max);
+
+        return bounds;
+    }
+
+
     // returns a worm end only when one end is free
     WormEnd GetFreeEnd()
     {   
