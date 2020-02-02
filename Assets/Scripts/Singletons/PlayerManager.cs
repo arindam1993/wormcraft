@@ -81,6 +81,7 @@ public class PlayerManager : MonoBehaviour
         if (players.Count > 0)
         {
             Bounds bounds = GetPlayersBoundingBox();
+            bounds.Encapsulate(SpaceShip.Instance.transform.position);
             cam.orthographicSize = GetOrthographicSizeFitBounds(bounds);
             cam.transform.position = GetCameraPositionFollowBounds(bounds);
         }

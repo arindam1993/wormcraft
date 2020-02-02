@@ -31,14 +31,14 @@ public class GameManager0 : MonoBehaviour
 
     void Update()
     {
-        distanceText.text = DISTANCE + " : " + this.calculateDistance() + " m";
-        percentFixed.text = PERCENTAGE + this.GetPercentageFixed().ToString() + " %";
+        distanceText.text = DISTANCE + " : " + System.Math.Floor(this.calculateDistance()) + " m";
+        percentFixed.text = PERCENTAGE + System.Math.Floor(this.GetPercentageFixed()) + " %";
     }
 
-    private string calculateDistance()
+    private float calculateDistance()
     {
         float dist = Vector3.Distance(spaceship.transform.position, end.transform.position);
-        return dist.ToString();
+        return dist;
     }
 
     public float GetPercentageFixed()
