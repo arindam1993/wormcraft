@@ -35,4 +35,14 @@ public class AudioManager : MonoBehaviour
     {
         MainMusic.Play();
     }
+
+    public void PlayMagnetFX()
+    {
+        MagnetFx.Play();
+    }
+
+    public void PlayThrowFX()
+    {
+
+    }
 }

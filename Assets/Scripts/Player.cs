@@ -20,8 +20,7 @@ public class Player : MonoBehaviour
     Rigidbody2D endA;
     Rigidbody2D endB;
 
-
-	void Start()
+    void Start()
 	{
         cachedRenderer = this.transform.Find("Center").GetComponent<SpriteRenderer>();
         endA = this.transform.Find("End_A").GetComponent<Rigidbody2D>();
@@ -34,7 +33,6 @@ public class Player : MonoBehaviour
 	{
         endB.AddForce(Actions.joystick.Value * forceMultiplier);
 	}
-
 }
 
 

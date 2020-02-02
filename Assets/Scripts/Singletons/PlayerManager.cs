@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
 	// to understand the basic multiplayer example first before looking a this one.
 
     public GameObject playerPrefab;
+    public Camera cam;
 
     const int maxPlayers = 4;
 
@@ -62,6 +63,14 @@ public class PlayerManager : MonoBehaviour
             {
                 CreatePlayer(null);
             }
+        }
+
+        if (players.Count > 0)
+        {
+            Vector3 val = GetCameraLookPosition();
+            //cam.transform.position = GetCameraLookPosition();
+            cam.transform.LookAt(GetCameraLookPosition());
+            Debug.Log(val);
         }
     }
 
@@ -169,5 +178,16 @@ public class PlayerManager : MonoBehaviour
         players.Remove(player);
         player.Actions = null;
         Destroy(player.gameObject);
+    }
+
+    private Vector3 GetCameraLookPosition()
+    {
+        Bounds allPlayerBounds = new Bounds();
+        players.ForEach((player) =>
+        {
+            allPlayerBounds.Encapsulate(player.transform.position);
+        });
+
+        return allPlayerBounds.center;
     }
 }
