@@ -42,7 +42,7 @@ public class PlayerActions : PlayerActionSet
 	{
 		var actions = new PlayerActions();
 
-		actions.Join.AddDefaultBinding( InputControlType.Action8 );
+		actions.Join.AddDefaultBinding( InputControlType.Command );
 
 		actions.Up.AddDefaultBinding( InputControlType.LeftStickUp );
 		actions.Down.AddDefaultBinding( InputControlType.LeftStickDown );
