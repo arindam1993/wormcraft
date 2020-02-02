@@ -231,21 +231,22 @@ public class PlayerManager : MonoBehaviour
             orthoSize = (boundsMax.y - boundsMin.y) / 2.0f;
         }
 
+        float padding = (orthoSize / 8.0f);
         // Make sure the screen doesn't become comically small
-        orthoSize = Mathf.Max(orthoSize, minCamOrthoSize);
+        orthoSize = Mathf.Max(orthoSize + padding, minCamOrthoSize);
 
-        // We already made room for the largest dimension, but it may be off the frame in y still (because y is fixed)
+        // Compute top and bottom of camera for the new orthographic size
         float nextCamBottom = camCenter.y - orthoSize;
         float nextCamTop = camCenter.y + orthoSize;
 
+        // We already fit the largest dimension, but it may be off the frame in y still (because y is fixed)
         // Fix for being off the bottom
         if (boundsBottom < nextCamBottom)
         {
             orthoSize += nextCamBottom - boundsBottom;
         }
-
         // Fix for being off the top
-        if (boundsTop > nextCamTop)
+        else if (boundsTop > nextCamTop)
         {
             orthoSize += boundsTop - nextCamTop;
         }
