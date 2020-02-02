@@ -2942,11 +2942,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6439606198264236170, guid: 797cf2fbedf6e46ec977a99cfa525b23,
+    - target: {fileID: 2559730657437066132, guid: 797cf2fbedf6e46ec977a99cfa525b23,
         type: 3}
-      propertyPath: MagnetFx
+      propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 1129612656192423651}
+      objectReference: {fileID: 8300000, guid: b163f8c73fa7b4868b2a3c57847f61b2, type: 3}
     - target: {fileID: 8157204096394431306, guid: 797cf2fbedf6e46ec977a99cfa525b23,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3004,12 +3004,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 797cf2fbedf6e46ec977a99cfa525b23, type: 3}
---- !u!82 &1129612656192423651 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 2559730657437066132, guid: 797cf2fbedf6e46ec977a99cfa525b23,
-    type: 3}
-  m_PrefabInstance: {fileID: 1129612656192423650}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2715994203002522417
 PrefabInstance:
   m_ObjectHideFlags: 0

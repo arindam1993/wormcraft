@@ -75,7 +75,7 @@ public class WormEnd : MonoBehaviour
             grabJoint.connectedBody = grabbableObject;
 
 
-            //TODO: sound
+            AudioManager.Instance.PlayMagnetFX();
         }
     }
 
@@ -87,7 +87,7 @@ public class WormEnd : MonoBehaviour
             Component.Destroy(this.grabJoint);
             this.grabJoint = null;
 
-            //TODO: sound
+            AudioManager.Instance.PlayThrowFX();
         }
     }
 
