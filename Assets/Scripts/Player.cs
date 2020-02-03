@@ -134,6 +134,8 @@ public class Player : BaseDisableable
             GameObject child = childGameObjects[cIdx];
             child.GetComponent<Rigidbody2D>().simulated = true;
             child.GetComponent<SpriteRenderer>().enabled = true;
+            child.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            child.GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
         }
         outlineA.enabled = true;
         outlineB.enabled = true;

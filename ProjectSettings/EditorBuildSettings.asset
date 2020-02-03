@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Scott/WormDevLevel.unity
+    guid: 4349806571737416e98823bda0db0ed2
   m_configObjects: {}

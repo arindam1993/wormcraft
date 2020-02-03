@@ -31,8 +31,7 @@ public class SpaceShip : BaseDisableable
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("collision");
-        Debug.Log(collision.gameObject.tag);
+        
         if (collision.gameObject.CompareTag("Tools"))
         {
             this.addToFixed();
@@ -66,5 +65,8 @@ public class SpaceShip : BaseDisableable
         base.WormcraftEnable();
         this.GetComponent<Rigidbody2D>().simulated = true;
         this.GetComponent<SpriteRenderer>().enabled = true;
+        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+        this.GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
+
     }
 }

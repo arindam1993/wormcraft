@@ -5,7 +5,7 @@ using UnityEngine;
 public class Respawnable : MonoBehaviour
 {
     public static float BottomY = -15.0f;
-    public static float TopY = 6.0f;
+    public static float TopY = 15.0f;
 
     public float RespawnTime;
     BaseDisableable disableTarget;
